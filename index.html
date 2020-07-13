@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget App</title>
+    <link rel="stylesheet" href="./normalize.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Budgets App</h1>
+
+        <div class="control">
+          <div class="flex info">
+            <h3>Total Balance</h3>
+            <h2 class="number pos" id="totalAmount">3,000</h2>
+            <!-- <h2 class="number neg" id="totalAmount">3,000</h2> -->
+          </div>
+          <div class="flex fields">
+            <input type="number" id="incomeAmount" />
+            <button class="addIncome">Income</button>
+          </div>
+          <div class="flex fields">
+            <input type="number" id="expenseAmount" />
+            <button class="addExpense">Expense</button>
+          </div>
+        </div>
+
+        <!-- Budget List -->
+        <div class="list">
+
+          <!-- Budget Item Example -->
+          <!-- <div class="budget-item income">
+            <div>
+              <h4>$1000</h4>
+              <span>July 24, 2020</span>
+            </div>
+            <p class="delete">
+              delete
+            </p>
+          </div> -->
+
+          
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
