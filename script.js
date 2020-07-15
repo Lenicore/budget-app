@@ -30,17 +30,24 @@ var addBudgetItem = function(type, dollar){
 		div.appendChild(number);
 		div.appendChild(span);
 		outterDiv.appendChild(div);
-		var p = document.createElement("p");
-		p.setAttribute("class", "delete");
-		p.innerHTML = "delete";
-		outterDiv.appendChild(p);
+		var para = document.createElement("p");
+		para.setAttribute("class", "delete");
+		para.innerHTML = "delete";
+		outterDiv.appendChild(para);
 		
 		list.prepend(outterDiv);
-		// data.push(outterDiv.outerHTML);
-		// localStorage.setItem("info",JSON.stringify(data));
-		p.addEventListener("click", function(){
+		para.addEventListener("click", function(){
 			outterDiv.remove();
-			localStorage.removeItem(this);
+			// get current item
+			var curItem = records.find(function(record){
+				return record.date === curItem && Number(record.amount) === Number(amount);
+			});
+			var index = records.indexOf(curItem);
+			// The splice() method changes the contents of an array by removing
+			// or replacing existing elements and/or adding new elements in place
+			records.splice(index,1);
+			// update localstorage
+			localStorage.setItem("records", JSON.stringify(records));
 		});
 }
 
