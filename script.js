@@ -13,6 +13,15 @@ var list = document.getElementsByClassName("list")[0];
 // months in a year
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+//update table content
+var updateTable = function(){
+	for(var i = 0; i < records.length; i++) {
+			var record = records[i];
+			addBudgetItem(record.type, record.amount);						
+		}
+		retrieveTotalValue();
+}
+
 var addBudgetItem = function(type, dollar){
 	var outterDiv = document.createElement("div");
 		outterDiv.setAttribute("class", "budget-item " + type);
@@ -38,9 +47,10 @@ var addBudgetItem = function(type, dollar){
 		list.prepend(outterDiv);
 		para.addEventListener("click", function(){
 			outterDiv.remove();
-			// get current item
+			retrieveTotalValue(type, dollar);
+			// check if is current item
 			var curItem = records.find(function(record){
-				return record.date === curItem && Number(record.amount) === Number(amount);
+				return record.date === curItem && Number(record.amount) === Number(dollar);
 			});
 			var index = records.indexOf(curItem);
 			// The splice() method changes the contents of an array by removing
@@ -52,14 +62,31 @@ var addBudgetItem = function(type, dollar){
 }
 
 // retrieve total value 
-var retrieveTotalValue = function() {
-	document.getElementById("totalAmount").innerHTML = localStorage.getItem("total");
-	if(parseFloat(JSON.parse(localStorage.getItem("total"))) >= 0) {
-		document.getElementById("totalAmount").setAttribute("class", "number pos");
+var retrieveTotalValue = function(type, amount) {
+	var TotalAmount = document.getElementById("totalAmount");
+	if(type && amount) {
+		if(type == "income") {
+			TotalAmount.innerHTML = localStorage.getItem("total") - amount;	
+			localStorage.setItem("total", localStorage.getItem("total") - amount);
+		} else if (type == "expense") {
+			// TotalAmount.innerHTML = (localStorage.getItem("total") + amount);
+			// localStorage.setItem("total", localStorage.getItem("total") + amount);
+			TotalAmount.innerHTML = (localStorage.getItem("total") - (amount*-1));
+			localStorage.setItem("total", localStorage.getItem("total") - (amount*-1));
+		}
+		
 	} else {
-		document.getElementById("totalAmount").setAttribute("class", "number neg");
+		TotalAmount.innerHTML = localStorage.getItem("total");
+	}
+	
+	if(parseFloat(JSON.parse(localStorage.getItem("total"))) >= 0) {
+		TotalAmount.setAttribute("class", "number pos");
+	} else {
+		TotalAmount.setAttribute("class", "number neg");
 	}
 }
+
+
 
 // initialization
 var initial = once(function() {
@@ -71,11 +98,7 @@ var initial = once(function() {
 	if(!records) {	
 		records = [];
 	} else {
-		for(var i = 0; i < records.length; i++) {
-			var record = records[i];
-			addBudgetItem(record.type, record.amount);
-			retrieveTotalValue();
-		}
+		updateTable();
 	}
 })
 
