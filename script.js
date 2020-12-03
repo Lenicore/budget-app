@@ -12,6 +12,10 @@ var expenseValue = document.getElementById("expenseAmount");
 var list = document.getElementsByClassName("list")[0];
 // months in a year
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// total income
+var totalIncome = 0;
+// total expense
+var totalExpense = 0;
 
 //update table content
 var updateTable = function(){
@@ -166,4 +170,81 @@ var add = function(category,dollar) {
 		date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
 	})
 	localStorage.setItem("records", JSON.stringify(records));
+}
+
+// tab page for all
+$("#filter-all").click(function() {
+	$("#filter-income").removeClass('active');
+	$("#filter-expense").removeClass('active');
+	$("#filter-all").addClass('active');
+	$(".expense").show();
+	$(".income").show();
+})
+
+// tab page for income
+$("#filter-income").click(function() {
+	$("#filter-income").addClass('active');	
+	$("#filter-expense").removeClass('active');
+	$("#filter-all").removeClass('active');
+	$(".expense").hide();
+	$(".income").show();
+})
+
+// tab page for expense
+$("#filter-expense").click(function() {
+	$("#filter-income").removeClass('active');	
+	$("#filter-expense").addClass('active');
+	$("#filter-all").removeClass('active');
+	$(".expense").show();
+	$(".income").hide();
+})
+
+var getCurrentInAndOut = function(month, year) {
+	for(var i = 0; i < records.length; i++) {
+			var record = records[i];
+			var string = record.date.split(" ");
+			console.log(string);
+			if(string[0] == months[month] && string[2] == year) {
+				if(record.type == "income") {
+					totalIncome += 	parseInt(record.amount);
+				} 
+				if(record.type == "expense"){
+					totalExpense +=	parseInt(record.amount);
+				}	
+			} else {
+				alert("No data in choosen date! Please select another date.")
+			}
+		}
+}
+
+$(".monthlyResult").click(function() {
+	var date = new Date($("#start").val());
+	var month = date.getMonth() + 1;
+	var year = date.getFullYear();
+	getCurrentInAndOut(month, year);
+	showMonth(month, year);
+})
+
+var showMonth = function(month, year) {
+var realmonth = month + 1;
+var chart = new CanvasJS.Chart("chartContainer", {
+	
+	animationEnabled: true,
+	title: {
+		text: "Pie Chart For " + realmonth + ", " + year
+	},
+	data: [{
+		type: "pie",
+		startAngle: 240,
+		yValueFormatString: "\"$\"##",
+		indexLabel: "{label} {y}",
+		dataPoints: [
+			{y: totalIncome, label: "Income"},
+			{y: totalExpense, label: "Expense"},
+			
+		]
+	}]
+});
+chart.render();
+
 }

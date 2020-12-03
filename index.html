@@ -10,6 +10,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   </head>
   <body>
     <main>
@@ -19,7 +21,7 @@
         <div class="control">
           <div class="flex info">
             <h3>Total Balance</h3>
-            <h2 class="number pos" id="totalAmount">3,000</h2>
+            <h2 class="number pos" id="totalAmount">0</h2>
             <!-- <h2 class="number neg" id="totalAmount">3,000</h2> -->
           </div>
           <div class="flex fields">
@@ -32,25 +34,31 @@
           </div>
         </div>
 
+        <!-- Budget Filter -->
+        <div class="filter">
+          <span id="filter-all" class="active">All</span>
+          <span id="filter-income">Income</span>
+          <span id="filter-expense">Expense</span>
+        </div>
+
         <!-- Budget List -->
         <div class="list">
-
-          <!-- Budget Item Example -->
-          <!-- <div class="budget-item income">
-            <div>
-              <h4>$1000</h4>
-              <span>July 24, 2020</span>
-            </div>
-            <p class="delete">
-              delete
-            </p>
-          </div> -->
-
-          
+        
         </div>
       </section>
+
+      <aside>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <div class= "right"> 
+          <label for="start">Month Result:</label>
+
+          <input type="month" id="start" name="start" min="2020-01" value="2020-12">
+          <button class="monthlyResult">Go</button>
+        </div>
+      </aside>
     </main>
 
     <script src="./script.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   </body>
 </html>
