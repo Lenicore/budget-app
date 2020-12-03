@@ -11,8 +11,9 @@ body {
 }
 
 main {
+  
   max-width: 480px;
-  margin: 0 auto;
+  margin: 0 1.5%;
   background-color: #fafafa;
   min-height: 100vh;
 }
@@ -92,10 +93,24 @@ section .fields button.addExpense {
   background: #e67f81;
 }
 
+section .filter {
+  margin-top: 24px;
+  padding-left: 8px;
+}
+
+section .filter span {
+  font-size: 16px;
+  margin-right: 12px;
+}
+
+section .filter span.active {
+  color: #333333;
+}
+
 section .list {
   max-height: calc(100vh - 300px);
   overflow: scroll;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 section .list .budget-item {
@@ -145,4 +160,29 @@ section .list .budget-item .delete {
   color: #e67f81;
   cursor: pointer;
   user-select: none;
+}
+
+aside {
+  float: right;  
+  max-width: 480px;
+  margin: 0 1.5%;  
+  min-height: 100vh;
+}
+
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+.right {
+  position: absolute;
+  right: 150px;
+  width: 200px;
+  height: 120px;
+  
 }
